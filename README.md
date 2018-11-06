@@ -25,7 +25,6 @@ go get -v -u github.com/foxnut/go-hdwallet
 ## example
 
 ```go
-func main() {
 package main
 
 import (
