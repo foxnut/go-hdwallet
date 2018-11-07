@@ -5,10 +5,10 @@ import (
 	"encoding/hex"
 
 	"github.com/btcsuite/btcd/btcec"
+	"github.com/btcsuite/btcd/txscript"
 	"github.com/btcsuite/btcutil"
 	"github.com/btcsuite/btcutil/hdkeychain"
 	"github.com/cpacia/bchutil"
-	"golang.org/x/crypto/ripemd160"
 )
 
 // Key struct
@@ -158,12 +158,7 @@ func (k *Key) PublicHash() ([]byte, error) {
 		return nil, err
 	}
 
-	hash := make([]byte, 0, ripemd160.Size)
-	for _, b := range *address.Hash160() {
-		hash = append(hash, b)
-	}
-
-	return hash, nil
+	return address.ScriptAddress(), nil
 }
 
 // AddressBTC generate public key to btc style address
@@ -206,4 +201,29 @@ func (k *Key) AddressP2WPKH() (string, error) {
 	}
 
 	return addr.EncodeAddress(), nil
+}
+
+// AddressP2WPKHInP2SH generate public key to p2wpkh nested within p2sh style address
+func (k *Key) AddressP2WPKHInP2SH() (string, error) {
+	pubHash, err := k.PublicHash()
+	if err != nil {
+		return "", err
+	}
+
+	addr, err := btcutil.NewAddressWitnessPubKeyHash(pubHash, k.opt.Params)
+	if err != nil {
+		return "", err
+	}
+
+	script, err := txscript.PayToAddrScript(addr)
+	if err != nil {
+		return "", err
+	}
+
+	addr1, err := btcutil.NewAddressScriptHash(script, k.opt.Params)
+	if err != nil {
+		return "", err
+	}
+
+	return addr1.EncodeAddress(), nil
 }
