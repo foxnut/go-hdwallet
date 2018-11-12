@@ -83,15 +83,16 @@ func (k *Key) GetChildKey(opts ...Option) (*Key, error) {
 	var (
 		err error
 		o   = newOptions(opts...)
+		no  = o
 	)
 
 	typ, ok := coinTypes[o.CoinType]
 	if ok {
-		o = newOptions(append(opts, CoinType(typ))...)
+		no = newOptions(append(opts, CoinType(typ))...)
 	}
 
 	extended := k.Extended
-	for _, i := range o.Path {
+	for _, i := range no.GetPath() {
 		extended, err = extended.Child(i)
 		if err != nil {
 			return nil, err

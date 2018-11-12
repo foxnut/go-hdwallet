@@ -39,7 +39,6 @@ type Options struct {
 	Account      uint32
 	Change       uint32
 	AddressIndex uint32
-	Path         []uint32
 }
 
 func newOptions(opts ...Option) *Options {
@@ -58,17 +57,18 @@ func newOptions(opts ...Option) *Options {
 		o(opt)
 	}
 
-	if len(opt.Path) <= 0 {
-		opt.Path = []uint32{
-			opt.Purpose,
-			opt.CoinType,
-			opt.Account,
-			opt.Change,
-			opt.AddressIndex,
-		}
-	}
-
 	return opt
+}
+
+// GetPath return path in bip44 style
+func (o *Options) GetPath() []uint32 {
+	return []uint32{
+		o.Purpose,
+		o.CoinType,
+		o.Account,
+		o.Change,
+		o.AddressIndex,
+	}
 }
 
 // Params set to options
@@ -138,12 +138,5 @@ func Change(c uint32) Option {
 func AddressIndex(a uint32) Option {
 	return func(o *Options) {
 		o.AddressIndex = a
-	}
-}
-
-// Path set to options
-func Path(p ...uint32) Option {
-	return func(o *Options) {
-		o.Path = p
 	}
 }
