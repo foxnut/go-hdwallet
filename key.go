@@ -13,7 +13,7 @@ import (
 
 // Key struct
 type Key struct {
-	opt      *Options
+	Opt      *Options
 	Extended *hdkeychain.ExtendedKey
 
 	// for btc
@@ -47,7 +47,7 @@ func NewKey(opts ...Option) (*Key, error) {
 	}
 
 	key := &Key{
-		opt:      o,
+		Opt:      o,
 		Extended: extended,
 	}
 
@@ -100,7 +100,7 @@ func (k *Key) GetChildKey(opts ...Option) (*Key, error) {
 	}
 
 	key := &Key{
-		opt:      o,
+		Opt:      o,
 		Extended: extended,
 	}
 
@@ -120,7 +120,7 @@ func (k *Key) GetWallet(opts ...Option) (Wallet, error) {
 		return nil, err
 	}
 
-	coin, ok := coins[key.opt.CoinType]
+	coin, ok := coins[key.Opt.CoinType]
 	if !ok {
 		return nil, ErrCoinTypeUnknow
 	}
@@ -135,7 +135,7 @@ func (k *Key) PrivateHex() string {
 
 // PrivateWIF generate private key to string by wif
 func (k *Key) PrivateWIF(compress bool) (string, error) {
-	wif, err := btcutil.NewWIF(k.Private, k.opt.Params, compress)
+	wif, err := btcutil.NewWIF(k.Private, k.Opt.Params, compress)
 	if err != nil {
 		return "", err
 	}
@@ -154,7 +154,7 @@ func (k *Key) PublicHex(compress bool) string {
 
 // PublicHash generate public key by hash160
 func (k *Key) PublicHash() ([]byte, error) {
-	address, err := k.Extended.Address(k.opt.Params)
+	address, err := k.Extended.Address(k.Opt.Params)
 	if err != nil {
 		return nil, err
 	}
@@ -164,7 +164,7 @@ func (k *Key) PublicHash() ([]byte, error) {
 
 // AddressBTC generate public key to btc style address
 func (k *Key) AddressBTC() (string, error) {
-	address, err := k.Extended.Address(k.opt.Params)
+	address, err := k.Extended.Address(k.Opt.Params)
 	if err != nil {
 		return "", err
 	}
@@ -174,18 +174,18 @@ func (k *Key) AddressBTC() (string, error) {
 
 // AddressBCH generate public key to bch style address
 func (k *Key) AddressBCH() (string, error) {
-	address, err := k.Extended.Address(k.opt.Params)
+	address, err := k.Extended.Address(k.Opt.Params)
 	if err != nil {
 		return "", err
 	}
 
-	addr, err := bchutil.NewCashAddressPubKeyHash(address.ScriptAddress(), k.opt.Params)
+	addr, err := bchutil.NewCashAddressPubKeyHash(address.ScriptAddress(), k.Opt.Params)
 	if err != nil {
 		return "", err
 	}
 
 	data := addr.EncodeAddress()
-	prefix := bchutil.Prefixes[k.opt.Params.Name]
+	prefix := bchutil.Prefixes[k.Opt.Params.Name]
 	return prefix + ":" + data, nil
 }
 
@@ -196,7 +196,7 @@ func (k *Key) AddressP2WPKH() (string, error) {
 		return "", err
 	}
 
-	addr, err := btcutil.NewAddressWitnessPubKeyHash(pubHash, k.opt.Params)
+	addr, err := btcutil.NewAddressWitnessPubKeyHash(pubHash, k.Opt.Params)
 	if err != nil {
 		return "", err
 	}
@@ -211,7 +211,7 @@ func (k *Key) AddressP2WPKHInP2SH() (string, error) {
 		return "", err
 	}
 
-	addr, err := btcutil.NewAddressWitnessPubKeyHash(pubHash, k.opt.Params)
+	addr, err := btcutil.NewAddressWitnessPubKeyHash(pubHash, k.Opt.Params)
 	if err != nil {
 		return "", err
 	}
@@ -221,7 +221,7 @@ func (k *Key) AddressP2WPKHInP2SH() (string, error) {
 		return "", err
 	}
 
-	addr1, err := btcutil.NewAddressScriptHash(script, k.opt.Params)
+	addr1, err := btcutil.NewAddressScriptHash(script, k.Opt.Params)
 	if err != nil {
 		return "", err
 	}

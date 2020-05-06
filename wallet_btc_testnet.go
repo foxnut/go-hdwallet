@@ -11,7 +11,7 @@ type btcTestnet struct {
 }
 
 func newBTCTestnet(key *Key) Wallet {
-	key.opt.Params = &BTCTestnetParams
+	key.Opt.Params = &BTCTestnetParams
 	return &btcTestnet{
 		name:   "Bitcoin Testnet",
 		symbol: "BTCTestnet",
@@ -20,7 +20,7 @@ func newBTCTestnet(key *Key) Wallet {
 }
 
 func (c *btcTestnet) GetType() uint32 {
-	return c.key.opt.CoinType
+	return c.key.Opt.CoinType
 }
 
 func (c *btcTestnet) GetName() string {

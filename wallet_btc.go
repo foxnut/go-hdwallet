@@ -19,7 +19,7 @@ func newBTC(key *Key) Wallet {
 }
 
 func (c *btc) GetType() uint32 {
-	return c.key.opt.CoinType
+	return c.key.Opt.CoinType
 }
 
 func (c *btc) GetName() string {

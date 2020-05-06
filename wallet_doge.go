@@ -12,7 +12,7 @@ func newDOGE(key *Key) Wallet {
 	token := newBTC(key).(*btc)
 	token.name = "Dogecoin"
 	token.symbol = "DOGE"
-	token.key.opt.Params = &DOGEParams
+	token.key.Opt.Params = &DOGEParams
 
 	return &doge{btc: token}
 }

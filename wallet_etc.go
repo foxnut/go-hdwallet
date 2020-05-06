@@ -23,7 +23,7 @@ func newETC(key *Key) Wallet {
 }
 
 func (c *etc) GetType() uint32 {
-	return c.key.opt.CoinType
+	return c.key.Opt.CoinType
 }
 
 func (c *etc) GetName() string {
