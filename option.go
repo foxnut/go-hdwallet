@@ -6,7 +6,7 @@ import (
 
 // default options
 var (
-	DefaultParams = &chaincfg.MainNetParams
+	DefaultParams = &BTCParams
 
 	// master key options
 	DefaultPassword = ""

@@ -18,14 +18,15 @@ const (
 // wallet type from bip44
 const (
 	// https://github.com/satoshilabs/slips/blob/master/slip-0044.md#registered-coin-types
-	BTC  = ZeroQuote + 0
-	LTC  = ZeroQuote + 2
-	DOGE = ZeroQuote + 3
-	DASH = ZeroQuote + 5
-	ETH  = ZeroQuote + 60
-	ETC  = ZeroQuote + 61
-	BCH  = ZeroQuote + 145
-	QTUM = ZeroQuote + 2301
+	BTC        = ZeroQuote + 0
+	BTCTestnet = ZeroQuote + 1
+	LTC        = ZeroQuote + 2
+	DOGE       = ZeroQuote + 3
+	DASH       = ZeroQuote + 5
+	ETH        = ZeroQuote + 60
+	ETC        = ZeroQuote + 61
+	BCH        = ZeroQuote + 145
+	QTUM       = ZeroQuote + 2301
 
 	// btc token
 	USDT = BTCToken + 1

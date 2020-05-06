@@ -6,13 +6,14 @@ import (
 
 // init net params
 var (
-	BTCParams  = chaincfg.MainNetParams
-	LTCParams  = chaincfg.MainNetParams
-	DOGEParams = chaincfg.MainNetParams
-	DASHParams = chaincfg.MainNetParams
-	BCHParams  = chaincfg.MainNetParams
-	QTUMParams = chaincfg.MainNetParams
-	USDTParams = chaincfg.MainNetParams
+	BTCParams        = chaincfg.MainNetParams
+	BTCTestnetParams = chaincfg.TestNet3Params
+	LTCParams        = chaincfg.MainNetParams
+	DOGEParams       = chaincfg.MainNetParams
+	DASHParams       = chaincfg.MainNetParams
+	BCHParams        = chaincfg.MainNetParams
+	QTUMParams       = chaincfg.MainNetParams
+	USDTParams       = chaincfg.MainNetParams
 )
 
 func init() {
