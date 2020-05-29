@@ -52,12 +52,12 @@ func (u *utxo) Signature(tx *wire.MsgTx, index int) error {
 		return err
 	}
 
-	wif, err := btcutil.NewWIF(u.key.Private, u.key.Opt.Params, true)
+	wif, err := btcutil.NewWIF(u.key.Private, u.key.Opt.Params, false)
 	if err != nil {
 		return err
 	}
 
-	sig, err := txscript.SignatureScript(tx, index, script, txscript.SigHashAll, wif.PrivKey, true)
+	sig, err := txscript.SignatureScript(tx, index, script, txscript.SigHashAll, wif.PrivKey, false)
 	if err != nil {
 		return err
 	}
