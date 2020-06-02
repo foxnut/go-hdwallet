@@ -1,6 +1,9 @@
 package hdwallet
 
 import (
+	"strconv"
+	"strings"
+
 	"github.com/btcsuite/btcd/chaincfg"
 )
 
@@ -139,4 +142,32 @@ func AddressIndex(a uint32) Option {
 	return func(o *Options) {
 		o.AddressIndex = a
 	}
+}
+
+// Path set to options
+// example: m/44'/0'/0'/0/0
+// example: m/Purpose'/CoinType'/Account'/Change/AddressIndex
+func Path(path string) Option {
+	return func(o *Options) {
+		path = strings.TrimPrefix(path, "m/")
+		paths := strings.Split(path, "/")
+		if len(paths) != 5 {
+			return
+		}
+		o.Purpose = PathNumber(paths[0])
+		o.CoinType = PathNumber(paths[1])
+		o.Account = PathNumber(paths[2])
+		o.Change = PathNumber(paths[3])
+		o.AddressIndex = PathNumber(paths[4])
+	}
+}
+
+// PathNumber 44' => 0x80000000 + 44
+func PathNumber(str string) uint32 {
+	num64, _ := strconv.ParseInt(strings.TrimSuffix(str, "'"), 10, 64)
+	num := uint32(num64)
+	if strings.HasSuffix(str, "'") {
+		num += ZeroQuote
+	}
+	return num
 }
